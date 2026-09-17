@@ -132,6 +132,8 @@ const FS = {
     document.body.prepend(h);
   },
 };
+window.FS = FS;
+
 document.addEventListener("DOMContentLoaded", () => {
   FS.header();
 });
