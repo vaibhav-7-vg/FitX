@@ -3,194 +3,711 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#111827">
+<meta name="theme-color" content="#0f172a">
+
 <title>FitSync — Login</title>
-<link rel="stylesheet" href="styles.css">
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  min-height:100vh;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at top left,#dfffe9 0,#f7faf9 32%,#eef3f1 100%);
+  color:#17211b;
+}
+
+.auth-page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px 16px;
+}
+
+.auth-card{
+  width:100%;
+  max-width:430px;
+  background:rgba(255,255,255,.96);
+  border:1px solid #e5ebe7;
+  border-radius:26px;
+  padding:30px 26px 25px;
+  box-shadow:
+    0 20px 60px rgba(20,40,30,.10),
+    0 4px 14px rgba(20,40,30,.05);
+}
+
+/* BRAND */
+
+.auth-brand{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  margin-bottom:28px;
+}
+
+.brand-icon{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  background:#17211b;
+  color:#b8f5ce;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  font-weight:800;
+  box-shadow:0 7px 18px rgba(23,33,27,.18);
+}
+
+.auth-brand h1{
+  font-size:22px;
+  line-height:1.1;
+  font-weight:800;
+  letter-spacing:-.4px;
+}
+
+.auth-brand p{
+  margin-top:4px;
+  color:#748078;
+  font-size:12px;
+}
+
+/* TABS */
+
+.auth-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:#f0f4f1;
+  padding:4px;
+  border-radius:13px;
+  margin-bottom:28px;
+}
+
+.auth-tab{
+  border:0;
+  background:transparent;
+  padding:11px 8px;
+  border-radius:10px;
+  font-size:13px;
+  font-weight:700;
+  color:#748078;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.auth-tab.active{
+  background:white;
+  color:#17211b;
+  box-shadow:0 2px 8px rgba(20,40,30,.08);
+}
+
+/* FORM */
+
+form h2{
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:-.5px;
+  margin-bottom:6px;
+}
+
+.auth-subtitle{
+  color:#7a847d;
+  font-size:13px;
+  margin-bottom:23px;
+}
+
+label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  color:#445049;
+  margin:15px 0 7px;
+}
+
+input{
+  width:100%;
+  height:47px;
+  border:1px solid #dce4df;
+  background:#fbfcfb;
+  border-radius:12px;
+  padding:0 14px;
+  font-size:14px;
+  color:#17211b;
+  outline:none;
+  transition:.2s ease;
+}
+
+input::placeholder{
+  color:#a1aaa4;
+}
+
+input:focus{
+  border-color:#75d69a;
+  background:white;
+  box-shadow:0 0 0 3px rgba(117,214,154,.14);
+}
+
+/* MAIN BUTTON */
+
+.primary-btn{
+  width:100%;
+  height:49px;
+  margin-top:22px;
+  border:0;
+  border-radius:13px;
+  background:#17211b;
+  color:white;
+  font-size:14px;
+  font-weight:750;
+  cursor:pointer;
+  transition:.2s ease;
+  box-shadow:0 8px 18px rgba(23,33,27,.15);
+}
+
+.primary-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 11px 22px rgba(23,33,27,.20);
+}
+
+.primary-btn:active{
+  transform:scale(.985);
+}
+
+.primary-btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+/* FORGOT */
+
+.text-btn{
+  display:block;
+  margin:15px auto 0;
+  border:0;
+  background:none;
+  color:#4d9d68;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* MESSAGE */
+
+.auth-message{
+  min-height:20px;
+  text-align:center;
+  margin-top:18px;
+  font-size:12px;
+  font-weight:600;
+  line-height:1.5;
+}
+
+.auth-message.success{
+  color:#299653;
+}
+
+.auth-message.error{
+  color:#d34e4e;
+}
+
+.auth-message.loading{
+  color:#718078;
+}
+
+/* FOOTER */
+
+.auth-note{
+  text-align:center;
+  color:#929b95;
+  font-size:10.5px;
+  margin-top:21px;
+}
+
+.hidden{
+  display:none !important;
+}
+
+/* MOBILE */
+
+@media(max-width:380px){
+  .auth-card{
+    padding:25px 20px 22px;
+    border-radius:22px;
+  }
+
+  form h2{
+    font-size:22px;
+  }
+}
+</style>
 </head>
+
 <body>
+
 <main class="auth-page">
+
 <section class="auth-card">
-<div class="auth-brand">
-<div class="brand-icon">F</div>
-<div>
-<h1>FitSync</h1>
-<p>Track yourself. Improve together.</p>
-</div>
-</div>
 
-<div class="auth-tabs">
-<button id="loginTab" class="auth-tab active" type="button">Login</button>
-<button id="signupTab" class="auth-tab" type="button">Create Account</button>
-</div>
+  <!-- BRAND -->
+  <div class="auth-brand">
+    <div class="brand-icon">F</div>
 
-<form id="loginForm">
-<h2>Welcome back</h2>
-<p class="auth-subtitle">Login to continue to FitSync.</p>
+    <div>
+      <h1>FitSync</h1>
+      <p>Track yourself. Improve together.</p>
+    </div>
+  </div>
 
-<label>Email</label>
-<input id="loginEmail" type="email" autocomplete="email" placeholder="Enter your email" required>
+  <!-- TABS -->
+  <div class="auth-tabs">
+    <button id="loginTab" class="auth-tab active" type="button">
+      Login
+    </button>
 
-<label>Password</label>
-<input id="loginPassword" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+    <button id="signupTab" class="auth-tab" type="button">
+      Create Account
+    </button>
+  </div>
 
-<button class="primary-btn" type="submit">Login</button>
+  <!-- LOGIN -->
+  <form id="loginForm">
 
-<button id="forgotBtn" class="text-btn" type="button">Forgot password?</button>
-</form>
+    <h2>Welcome back</h2>
 
-<form id="signupForm" class="hidden">
-<h2>Create your account</h2>
-<p class="auth-subtitle">Start your FitSync journey.</p>
+    <p class="auth-subtitle">
+      Login to continue to FitSync.
+    </p>
 
-<label>Name</label>
-<input id="signupName" type="text" autocomplete="name" placeholder="Enter your name" required>
+    <label for="loginEmail">Email</label>
 
-<label>Email</label>
-<input id="signupEmail" type="email" autocomplete="email" placeholder="Enter your email" required>
+    <input
+      id="loginEmail"
+      type="email"
+      autocomplete="email"
+      placeholder="Enter your email"
+      required
+    >
 
-<label>Password</label>
-<input id="signupPassword" type="password" autocomplete="new-password" placeholder="At least 6 characters" minlength="6" required>
+    <label for="loginPassword">Password</label>
 
-<label>Confirm password</label>
-<input id="signupConfirm" type="password" autocomplete="new-password" placeholder="Confirm your password" minlength="6" required>
+    <input
+      id="loginPassword"
+      type="password"
+      autocomplete="current-password"
+      placeholder="Enter your password"
+      required
+    >
 
-<button class="primary-btn" type="submit">Create Account</button>
-</form>
+    <button class="primary-btn" type="submit">
+      Login
+    </button>
 
-<div id="authMessage" class="auth-message"></div>
+    <button id="forgotBtn" class="text-btn" type="button">
+      Forgot password?
+    </button>
 
-<p class="auth-note">Your account is secured by Firebase Authentication.</p>
+  </form>
+
+
+  <!-- SIGNUP -->
+  <form id="signupForm" class="hidden">
+
+    <h2>Create your account</h2>
+
+    <p class="auth-subtitle">
+      Start your FitSync journey.
+    </p>
+
+    <label for="signupName">Name</label>
+
+    <input
+      id="signupName"
+      type="text"
+      autocomplete="name"
+      placeholder="Enter your name"
+      required
+    >
+
+    <label for="signupEmail">Email</label>
+
+    <input
+      id="signupEmail"
+      type="email"
+      autocomplete="email"
+      placeholder="Enter your email"
+      required
+    >
+
+    <label for="signupPassword">Password</label>
+
+    <input
+      id="signupPassword"
+      type="password"
+      autocomplete="new-password"
+      placeholder="At least 6 characters"
+      minlength="6"
+      required
+    >
+
+    <label for="signupConfirm">Confirm password</label>
+
+    <input
+      id="signupConfirm"
+      type="password"
+      autocomplete="new-password"
+      placeholder="Confirm your password"
+      minlength="6"
+      required
+    >
+
+    <button class="primary-btn" type="submit">
+      Create Account
+    </button>
+
+  </form>
+
+
+  <div id="authMessage" class="auth-message"></div>
+
+  <p class="auth-note">
+    Your account is secured by Firebase Authentication.
+  </p>
+
 </section>
+
 </main>
 
-<script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,sendPasswordResetEmail,updateProfile,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-import{getFirestore,doc,setDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-const firebaseConfig={
-apiKey:"AIzaSyAGkwXarUC1LCjqIjVnCc1OCKQzbsENokA",
-authDomain:"fitsync-a7d0e.firebaseapp.com",
-projectId:"fitsync-a7d0e",
-storageBucket:"fitsync-a7d0e.firebasestorage.app",
-messagingSenderId:"934279400181",
-appId:"1:934279400181:web:98ce71d045581a712913bc"
+<script type="module">
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  updateProfile,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+/* FIREBASE */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAGkwXarUC1LCjqIjVnCc1OCKQzbsENokA",
+  authDomain: "fitsync-a7d0e.firebaseapp.com",
+  projectId: "fitsync-a7d0e",
+  storageBucket: "fitsync-a7d0e.firebasestorage.app",
+  messagingSenderId: "934279400181",
+  appId: "1:934279400181:web:98ce71d045581a712913bc"
 };
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
+const app = initializeApp(firebaseConfig);
 
-const loginTab=document.getElementById("loginTab");
-const signupTab=document.getElementById("signupTab");
-const loginForm=document.getElementById("loginForm");
-const signupForm=document.getElementById("signupForm");
-const message=document.getElementById("authMessage");
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+
+/* ELEMENTS */
+
+const loginTab = document.getElementById("loginTab");
+const signupTab = document.getElementById("signupTab");
+
+const loginForm = document.getElementById("loginForm");
+const signupForm = document.getElementById("signupForm");
+
+const message = document.getElementById("authMessage");
+
+
+/* MESSAGE */
 
 function showMessage(text,type=""){
-message.textContent=text;
-message.className="auth-message "+type;
+  message.textContent = text;
+  message.className = "auth-message " + type;
 }
 
-loginTab.onclick=()=>{
-loginTab.classList.add("active");
-signupTab.classList.remove("active");
-loginForm.classList.remove("hidden");
-signupForm.classList.add("hidden");
-showMessage("");
+
+/* LOGIN TAB */
+
+loginTab.onclick = () => {
+
+  loginTab.classList.add("active");
+  signupTab.classList.remove("active");
+
+  loginForm.classList.remove("hidden");
+  signupForm.classList.add("hidden");
+
+  showMessage("");
+
 };
 
-signupTab.onclick=()=>{
-signupTab.classList.add("active");
-loginTab.classList.remove("active");
-signupForm.classList.remove("hidden");
-loginForm.classList.add("hidden");
-showMessage("");
+
+/* SIGNUP TAB */
+
+signupTab.onclick = () => {
+
+  signupTab.classList.add("active");
+  loginTab.classList.remove("active");
+
+  signupForm.classList.remove("hidden");
+  loginForm.classList.add("hidden");
+
+  showMessage("");
+
 };
 
-loginForm.onsubmit=async e=>{
-e.preventDefault();
-const email=document.getElementById("loginEmail").value.trim();
-const password=document.getElementById("loginPassword").value;
 
-try{
-showMessage("Logging in...","loading");
-await signInWithEmailAndPassword(auth,email,password);
-showMessage("Login successful.","success");
-setTimeout(()=>location.href="index.html",500);
-}catch(error){
-showMessage(getError(error),"error");
-}
+/* LOGIN */
+
+loginForm.onsubmit = async (e) => {
+
+  e.preventDefault();
+
+  const email =
+    document.getElementById("loginEmail").value.trim();
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+
+  try{
+
+    showMessage("Logging in...","loading");
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    showMessage(
+      "Login successful.",
+      "success"
+    );
+
+    setTimeout(() => {
+      location.href = "index.html";
+    },500);
+
+  }catch(error){
+
+    showMessage(
+      getError(error),
+      "error"
+    );
+
+  }
+
 };
 
-signupForm.onsubmit=async e=>{
-e.preventDefault();
 
-const name=document.getElementById("signupName").value.trim();
-const email=document.getElementById("signupEmail").value.trim();
-const password=document.getElementById("signupPassword").value;
-const confirm=document.getElementById("signupConfirm").value;
+/* CREATE ACCOUNT */
 
-if(password!==confirm){
-showMessage("Passwords do not match.","error");
-return;
-}
+signupForm.onsubmit = async (e) => {
 
-try{
-showMessage("Creating your account...","loading");
+  e.preventDefault();
 
-const credential=await createUserWithEmailAndPassword(auth,email,password);
+  const name =
+    document.getElementById("signupName").value.trim();
 
-await updateProfile(credential.user,{displayName:name});
+  const email =
+    document.getElementById("signupEmail").value.trim();
 
-await setDoc(doc(db,"users",credential.user.uid),{
-uid:credential.user.uid,
-name:name,
-email:email,
-createdAt:serverTimestamp()
-},{merge:true});
+  const password =
+    document.getElementById("signupPassword").value;
 
-showMessage("Account created successfully.","success");
-setTimeout(()=>location.href="profile.html",700);
-}catch(error){
-showMessage(getError(error),"error");
-}
+  const confirm =
+    document.getElementById("signupConfirm").value;
+
+
+  if(password !== confirm){
+
+    showMessage(
+      "Passwords do not match.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  try{
+
+    showMessage(
+      "Creating your account...",
+      "loading"
+    );
+
+
+    const credential =
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+
+    await updateProfile(
+      credential.user,
+      {
+        displayName:name
+      }
+    );
+
+
+    await setDoc(
+      doc(
+        db,
+        "users",
+        credential.user.uid
+      ),
+      {
+        uid:credential.user.uid,
+        name:name,
+        email:email,
+        createdAt:serverTimestamp()
+      },
+      {
+        merge:true
+      }
+    );
+
+
+    showMessage(
+      "Account created successfully.",
+      "success"
+    );
+
+
+    setTimeout(() => {
+      location.href = "profile.html";
+    },700);
+
+
+  }catch(error){
+
+    showMessage(
+      getError(error),
+      "error"
+    );
+
+  }
+
 };
 
-document.getElementById("forgotBtn").onclick=async()=>{
-const email=document.getElementById("loginEmail").value.trim();
 
-if(!email){
-showMessage("Enter your email first.","error");
-return;
-}
+/* FORGOT PASSWORD */
 
-try{
-await sendPasswordResetEmail(auth,email);
-showMessage("Password reset email sent. Check your inbox.","success");
-}catch(error){
-showMessage(getError(error),"error");
-}
+document.getElementById("forgotBtn").onclick =
+async () => {
+
+  const email =
+    document.getElementById("loginEmail").value.trim();
+
+
+  if(!email){
+
+    showMessage(
+      "Enter your email first.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  try{
+
+    await sendPasswordResetEmail(
+      auth,
+      email
+    );
+
+    showMessage(
+      "Password reset email sent. Check your inbox.",
+      "success"
+    );
+
+  }catch(error){
+
+    showMessage(
+      getError(error),
+      "error"
+    );
+
+  }
+
 };
+
+
+/* FIREBASE ERROR MESSAGES */
 
 function getError(error){
-switch(error.code){
-case"auth/email-already-in-use":return"An account with this email already exists.";
-case"auth/invalid-email":return"Please enter a valid email.";
-case"auth/weak-password":return"Password should be at least 6 characters.";
-case"auth/invalid-credential":return"Email or password is incorrect.";
-case"auth/user-not-found":return"No account found with this email.";
-case"auth/wrong-password":return"Incorrect password.";
-case"auth/too-many-requests":return"Too many attempts. Try again later.";
-default:return error.message||"Something went wrong.";
-}
+
+  switch(error.code){
+
+    case "auth/email-already-in-use":
+      return "An account with this email already exists.";
+
+    case "auth/invalid-email":
+      return "Please enter a valid email.";
+
+    case "auth/weak-password":
+      return "Password should be at least 6 characters.";
+
+    case "auth/invalid-credential":
+      return "Email or password is incorrect.";
+
+    case "auth/user-not-found":
+      return "No account found with this email.";
+
+    case "auth/wrong-password":
+      return "Incorrect password.";
+
+    case "auth/too-many-requests":
+      return "Too many attempts. Try again later.";
+
+    default:
+      return error.message || "Something went wrong.";
+
+  }
+
 }
 
-onAuthStateChanged(auth,user=>{
-if(user&&!location.pathname.endsWith("login.html")){
-location.href="index.html";
-}
+
+/* AUTH STATE */
+
+onAuthStateChanged(auth,user => {
+
+  if(
+    user &&
+    !location.pathname.endsWith("login.html")
+  ){
+
+    location.href = "index.html";
+
+  }
+
 });
+
 </script>
+
 </body>
 </html>
