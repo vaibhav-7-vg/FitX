@@ -1,0 +1,11 @@
+{
+  "name": "FitSync",
+  "short_name": "FitSync",
+  "description": "Track yourself. Improve together.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#06120d",
+  "theme_color": "#22d66b",
+  "orientation": "portrait",
+  "icons": []
+}
