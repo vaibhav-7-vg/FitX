@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#06110c"><title>FitSync — Activity</title><link rel="stylesheet" href="styles.css"></head><body><div class="app"><main>
+<section class="page-head"><h1 class="page-title">Activity</h1><div class="page-subtitle">Manually record your daily movement and recovery.</div></section>
+<section class="card"><h2 class="card-title">Today's activity</h2>
+<div class="form-group"><label>Steps</label><input id="stepsInput" type="number" min="0" placeholder="Enter current step count"></div>
+<div class="form-group"><label>Exercise minutes</label><input id="exerciseInput" type="number" min="0" placeholder="Minutes of exercise today"></div>
+<div class="form-group"><label>Sleep hours</label><input id="sleepInput" type="number" min="0" step=".1" placeholder="Hours slept last night"></div>
+<button class="btn" id="saveActivity">Save Activity</button></section>
+<section class="card section"><h2 class="card-title">Today's summary</h2><div class="stat-grid"><div class="stat"><div class="stat-value" id="sumSteps">0</div><div class="stat-label">Steps</div></div><div class="stat"><div class="stat-value" id="sumExercise">0m</div><div class="stat-label">Exercise</div></div><div class="stat"><div class="stat-value" id="sumSleep">0h</div><div class="stat-label">Sleep</div></div><div class="stat"><div class="stat-value" id="sumScore">0</div><div class="stat-label">Daily score</div></div></div></section>
+<section class="card section"><h2 class="card-title">Activity history</h2><div id="activityHistory"></div></section>
+</main></div><script src="core.js"></script><script src="activity.js"></script></body></html>
