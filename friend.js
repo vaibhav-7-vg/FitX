@@ -17,7 +17,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-const FS = window.FS;
+const FS = window.FS || {};
 const $ = id => document.getElementById(id);
 
 let uid = "";
@@ -76,7 +76,6 @@ document.addEventListener("DOMContentLoaded", start);
 
 async function start() {
   try {
-    FS.nav("friend");
 
     const result = await signInAnonymously(auth);
     uid = result.user.uid;
