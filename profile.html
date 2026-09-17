@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#06110c"><title>FitSync — Profile</title><link rel="stylesheet" href="styles.css"></head><body><div class="app"><main>
+<section class="page-head"><h1 class="page-title">Profile</h1><div class="page-subtitle">Set your body information and let FitSync create daily targets automatically.</div></section>
+<section class="card"><h2 class="card-title">Body & goals</h2>
+<div class="form-group"><label>Starting weight (kg)</label><input id="startingWeight" type="number" step=".1" placeholder="e.g. 75"></div>
+<div class="form-group"><label>Height (cm)</label><input id="height" type="number" step=".1" placeholder="e.g. 168"></div>
+<div class="form-group"><label>Goal weight (kg)</label><input id="goalWeight" type="number" step=".1" placeholder="e.g. 68"></div>
+<button class="btn" id="saveProfile">Calculate & Save Targets</button></section>
+<section class="card section"><h2 class="card-title">Automatic daily recommendations</h2><div class="target-grid"><div class="target-box"><div class="muted">Calories</div><div class="target-value" id="recCal">1950 kcal</div></div><div class="target-box"><div class="muted">Protein</div><div class="target-value" id="recProtein">120 g</div></div><div class="target-box"><div class="muted">Steps</div><div class="target-value" id="recSteps">8000</div></div><div class="target-box"><div class="muted">Sleep</div><div class="target-value" id="recSleep">8 h</div></div></div><div class="notice" style="margin-top:14px">These are general prototype recommendations, not medical advice. Your saved targets are automatically used on Home, Activity and Progress.</div></section>
+<section class="card section"><h2 class="card-title">Account</h2><div class="notice">Your profile data is stored locally in this browser for this prototype.</div></section>
+</main></div><script src="core.js"></script><script src="profile.js"></script></body></html>
