@@ -1,170 +1,63 @@
 (function(){
 "use strict";
-
 const KEY="fitsync_data_v2";
+const $=id=>document.getElementById(id);
+const n=id=>parseFloat($(id)?.value)||0;
 
-function $(id){return document.getElementById(id);}
-function num(id){const e=$(id);const n=e?parseFloat(e.value):0;return Number.isFinite(n)?n:0;}
-function text(id,v){const e=$(id);if(e)e.textContent=v;}
-function val(id,v){const e=$(id);if(e)e.value=v;}
-
-function getData(){
- try{
-  const x=JSON.parse(localStorage.getItem(KEY)||"{}");
-  if(!x.targets)x.targets={};
-  return x;
- }catch(e){return {targets:{}};}
+function calc(w,h,g){
+ const bmi=w/Math.pow(h/100,2);
+ let cal=22*w+2*(h-160);
+ if(g<w-2)cal-=250;
+ else if(g>w+2)cal+=200;
+ cal=Math.round(Math.max(1400,Math.min(3200,cal)));
+ let protein=Math.round(Math.max(70,Math.min(180,g*1.6)));
+ let steps=bmi>=30?7000:bmi>=27?7500:bmi>=24?8000:9000;
+ if(g<w-5)steps+=500;
+ return {cal,protein,steps:Math.min(12000,steps),sleep:7.5,bmi};
 }
 
-let data=getData();
-
-function recommend(weight,height,goal){
- if(weight<=0||height<=0||goal<=0)
-  return {calories:2000,protein:110,steps:8000,sleep:7.5};
-
- const bmi=weight/Math.pow(height/100,2);
- let calories=22*weight+2*(height-160);
- const diff=goal-weight;
-
- if(diff<-2)calories-=250;
- else if(diff>2)calories+=200;
-
- calories=Math.round(Math.max(1400,Math.min(3200,calories)));
-
- let protein=Math.round(Math.max(70,Math.min(180,goal*1.6)));
-
- let steps=8000;
- if(bmi>=30)steps=7000;
- else if(bmi>=27)steps=7500;
- else if(bmi>=24)steps=8000;
- else steps=9000;
-
- if(diff<-5)steps+=500;
- steps=Math.min(12000,steps);
-
- return {calories,protein,steps,sleep:7.5};
+function update(){
+ const w=n("startingWeight"),h=n("height"),g=n("goalWeight");
+ if(!w||!h||!g)return;
+ const r=calc(w,h,g);
+ $("recCal").textContent=r.cal+" kcal";
+ $("recProtein").textContent=r.protein+" g";
+ $("recSteps").textContent=r.steps.toLocaleString();
+ $("recSleep").textContent=r.sleep+" h";
 }
 
-function updateRecommendations(){
- let weight=num("startingWeight")||num("weight");
- let height=num("height");
- let goal=num("goalWeight");
-
- if(weight<=0||height<=0||goal<=0)return;
-
- const r=recommend(weight,height,goal);
-
- text("recommendedCalories",r.calories+" kcal");
- text("recommendedProtein",r.protein+" g");
- text("recommendedSteps",r.steps.toLocaleString());
- text("recommendedSleep",r.sleep+" h");
-
- if($("targetCalories"))val("targetCalories",r.calories);
- if($("targetProtein"))val("targetProtein",r.protein);
- if($("targetSteps"))val("targetSteps",r.steps);
- if($("targetSleep"))val("targetSleep",r.sleep);
-
- if($("targetCal"))val("targetCal",r.calories);
- if($("proteinTarget"))val("proteinTarget",r.protein);
- if($("stepsTarget"))val("stepsTarget",r.steps);
- if($("sleepTarget"))val("sleepTarget",r.sleep);
-
- const bmi=weight/Math.pow(height/100,2);
- text("bmiValue",bmi.toFixed(1));
-
- const diff=weight-goal;
- if($("weightDifference")){
-  text("weightDifference",
-   diff>0?Math.abs(diff).toFixed(1)+" kg to lose":
-   diff<0?Math.abs(diff).toFixed(1)+" kg to gain":
-   "Goal weight reached");
- }
+function save(){
+ const w=n("startingWeight"),h=n("height"),g=n("goalWeight");
+ if(!w||!h||!g){alert("Please enter valid weight, height and goal weight.");return;}
+ const r=calc(w,h,g);
+ let d={};
+ try{d=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){}
+ d.startingWeight=w;
+ d.weight=w;
+ d.height=h;
+ d.goalWeight=g;
+ d.targets={calories:r.cal,protein:r.protein,steps:r.steps,sleep:r.sleep};
+ localStorage.setItem(KEY,JSON.stringify(d));
+ update();
+ alert("Profile and daily targets saved!");
 }
 
-function saveProfile(){
- const weight=num("startingWeight")||num("weight");
- const height=num("height");
- const goal=num("goalWeight");
-
- if(weight<=0||height<=0||goal<=0){
-  alert("Please enter valid weight, height and goal weight.");
-  return;
- }
-
- const r=recommend(weight,height,goal);
-
- data.weight=weight;
- data.startingWeight=weight;
- data.height=height;
- data.goalWeight=goal;
-
- data.targets={
-  calories:r.calories,
-  protein:r.protein,
-  steps:r.steps,
-  sleep:r.sleep
- };
-
- data.targetCal=r.calories;
- data.targetCalories=r.calories;
- data.targetProtein=r.protein;
- data.proteinTarget=r.protein;
- data.targetSteps=r.steps;
- data.stepsTarget=r.steps;
- data.targetSleep=r.sleep;
- data.sleepTarget=r.sleep;
-
- localStorage.setItem(KEY,JSON.stringify(data));
- updateRecommendations();
-
- if(typeof window.toast==="function")window.toast("Profile and goals updated ✓");
- else alert("Profile and goals updated ✓");
-
- window.dispatchEvent(new CustomEvent("fitsyncProfileUpdated",{detail:{weight,height,goalWeight:goal,targets:r}}));
+function load(){
+ let d={};
+ try{d=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){}
+ if(d.startingWeight||d.weight)$("startingWeight").value=d.startingWeight||d.weight;
+ if(d.height)$("height").value=d.height;
+ if(d.goalWeight)$("goalWeight").value=d.goalWeight;
+ update();
 }
 
-function loadProfile(){
- const weight=Number(data.startingWeight||data.weight||75);
- const height=Number(data.height||170);
- const goal=Number(data.goalWeight||65);
-
- if($("startingWeight"))val("startingWeight",weight);
- if($("weight"))val("weight",weight);
- if($("height"))val("height",height);
- if($("goalWeight"))val("goalWeight",goal);
-
- updateRecommendations();
-}
-
-function init(){
- ["startingWeight","weight","height","goalWeight"].forEach(id=>{
-  const e=$(id);
-  if(e){
-   e.addEventListener("input",updateRecommendations);
-   e.addEventListener("change",updateRecommendations);
-  }
+document.addEventListener("DOMContentLoaded",function(){
+ ["startingWeight","height","goalWeight"].forEach(id=>{
+  $(id).addEventListener("input",update);
+  $(id).addEventListener("change",update);
  });
-
- ["saveProfile","saveProfileBtn","saveGoals","saveButton"].forEach(id=>{
-  const e=$(id);
-  if(e)e.addEventListener("click",e=>{e.preventDefault();saveProfile();});
- });
-
- const form=document.querySelector("form");
- if(form)form.addEventListener("submit",e=>{e.preventDefault();saveProfile();});
-
- loadProfile();
-}
-
-if(document.readyState==="loading")
- document.addEventListener("DOMContentLoaded",init);
-else init();
-
-window.FitXProfile={
- calculateRecommendations:recommend,
- updateRecommendations:updateRecommendations,
- saveProfile:saveProfile,
- loadProfile:loadProfile
-};
+ $("saveProfile").addEventListener("click",save);
+ load();
+});
 
 })();
