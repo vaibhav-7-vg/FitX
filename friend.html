@@ -1,34 +1,35 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#06110c"><title>FitSync — Friend</title><link rel="stylesheet" href="styles.css"></head><body><div class="app"><main>
 <section class="page-head"><h1 class="page-title">Friends</h1><div class="page-subtitle">Connect with friends and compare fitness progress.</div></section>
-<section class="card"><h2 class="card-title">Your Friend Code</h2><div id="myCodeBox" class="notice">Generating your code...</div><button class="friend-small-btn copy-btn" id="copyCodeBtn">Copy Code</button></section>
-<section class="card section"><h2 class="card-title">Add Friend</h2><div class="form-group"><label>Friend Code</label><input id="friendCode" placeholder="Example: FS-ABC123" autocomplete="off"></div><button class="friend-small-btn" id="connectBtn">Send Request</button><div id="connectMsg" class="compact-msg"></div></section>
+<section class="card"><h2 class="card-title">Your Friend Code</h2><div id="myCodeBox" class="notice">Generating your code...</div><button class="friend-btn" id="copyCodeBtn">Copy Code</button></section>
+<section class="card section"><h2 class="card-title">Add Friend</h2><div class="form-group"><label>Friend Code</label><input id="friendCode" placeholder="Example: FS-ABC123" autocomplete="off"><button class="friend-btn" id="connectBtn">Send Request</button></div><div id="connectMsg" class="compact-msg"></div></section>
 <section class="card section"><h2 class="card-title">My Friends</h2><div class="friends-table-wrap"><table class="friends-table"><thead><tr><th>Friend</th><th>Compare</th><th>Delete</th></tr></thead><tbody id="friendsList"><tr><td colspan="3" class="muted">Loading friends...</td></tr></tbody></table></div></section>
 <section class="card section" id="compareSection"><div class="small-title">Compare with Points</div><div class="compare-scores"><div class="score-box"><div class="big-score" id="myScore">0</div><div class="muted">Your points</div></div><div class="vs">VS</div><div class="score-box"><div class="big-score" id="friendScore">0</div><div class="muted" id="selectedFriendLabel">Select a friend</div></div></div><div id="winnerText" class="badge gray">Select a friend to compare</div></section>
 <section class="card section"><h2 class="card-title">Points Comparison</h2><div class="table-wrap"><table><thead><tr><th>Metric</th><th>You</th><th>Friend</th><th>Difference</th></tr></thead><tbody id="compareTable"><tr><td colspan="4" class="muted">Select a friend to compare.</td></tr></tbody></table></div></section>
 <section class="card section"><h2 class="card-title">Friend Requests</h2><div id="requestList" class="muted">Checking requests...</div></section>
 </main></div>
 <style>
-.friend-small-btn{border:1px solid rgba(80,220,130,.3);background:rgba(70,190,110,.10);color:#75e59b;border-radius:8px;padding:7px 11px;font-size:12px;font-weight:600;line-height:1;cursor:pointer;transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease;box-shadow:0 2px 8px rgba(0,0,0,.08);margin-top:10px}
-.friend-small-btn:hover{background:rgba(70,190,110,.18);border-color:rgba(80,220,130,.55);transform:translateY(-1px);box-shadow:0 4px 12px rgba(70,220,120,.12)}
-.friend-small-btn:active{transform:scale(.94)}
-.copy-btn{display:inline-block}
-.compact-msg{margin-top:9px;font-size:12px}
-.friends-table-wrap{overflow-x:auto;margin-top:8px}
+.friend-btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(80,220,130,.35);background:rgba(70,190,110,.1);color:#78e69c;border-radius:7px;padding:7px 12px;font-size:11px;font-weight:600;line-height:1;cursor:pointer;transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease;margin-top:9px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.friend-btn:hover{background:rgba(70,190,110,.18);border-color:rgba(80,220,130,.55);transform:translateY(-1px);box-shadow:0 4px 12px rgba(70,220,120,.14)}
+.friend-btn:active{transform:scale(.94)}
+.compact-msg{margin-top:8px;font-size:12px}
+.friends-table-wrap{width:100%;overflow-x:auto;margin-top:8px}
 .friends-table{width:100%;border-collapse:collapse;table-layout:fixed}
-.friends-table th{font-size:11px;color:rgba(255,255,255,.52);font-weight:600;text-align:left;padding:8px 6px;border-bottom:1px solid rgba(255,255,255,.08)}
-.friends-table td{font-size:13px;padding:10px 6px;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:middle}
+.friends-table th{padding:8px 5px;text-align:left;font-size:10px;font-weight:600;color:rgba(255,255,255,.5);border-bottom:1px solid rgba(255,255,255,.08)}
+.friends-table td{padding:9px 5px;text-align:left;font-size:12px;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:middle}
 .friends-table th:first-child,.friends-table td:first-child{width:48%}
 .friends-table th:nth-child(2),.friends-table td:nth-child(2),.friends-table th:nth-child(3),.friends-table td:nth-child(3){width:26%;text-align:center}
-.friend-action{border:1px solid rgba(80,220,130,.28);background:rgba(70,190,110,.08);color:#72df96;border-radius:6px;padding:5px 8px;font-size:10px;font-weight:600;cursor:pointer;transition:all .18s ease}
-.friend-action:hover{background:rgba(70,190,110,.18);transform:translateY(-1px)}
-.friend-action:active{transform:scale(.92)}
-.delete-action{color:#ff7777;border-color:rgba(255,90,90,.25);background:rgba(255,80,80,.06)}
-.delete-action:hover{background:rgba(255,80,80,.13)}
+.friend-name{font-size:12px;font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.friend-code{font-size:9px;margin-top:3px;color:rgba(255,255,255,.42);display:block}
+.friend-action{border:1px solid rgba(80,220,130,.3);background:rgba(70,190,110,.08);color:#75e49a;border-radius:5px;padding:5px 7px;font-size:9px;font-weight:600;line-height:1;cursor:pointer;transition:transform .16s ease,background .16s ease,border-color .16s ease;white-space:nowrap}
+.friend-action:hover{background:rgba(70,190,110,.18);border-color:rgba(80,220,130,.55);transform:translateY(-1px)}
+.friend-action:active{transform:scale(.9)}
+.delete-action{color:#ff7777;border-color:rgba(255,90,90,.25);background:rgba(255,80,80,.05)}
+.delete-action:hover{background:rgba(255,80,80,.12);border-color:rgba(255,90,90,.45)}
+.compare-scores{display:flex;align-items:center;justify-content:center;gap:25px;margin-top:14px}
 .score-box{text-align:center}
-.compare-scores{display:flex;align-items:center;justify-content:center;gap:28px;margin-top:14px}
-.vs{font-size:12px;font-weight:700;color:rgba(255,255,255,.42)}
-#winnerText{display:block;width:max-content;max-width:100%;margin:16px auto 0;font-size:11px;padding:6px 10px}
-.request-action{margin-top:9px}
-@media(max-width:420px){.friends-table td{font-size:12px;padding:9px 4px}.friend-action{font-size:9px;padding:5px 6px}.compare-scores{gap:20px}}
+.vs{font-size:11px;font-weight:700;color:rgba(255,255,255,.4)}
+#winnerText{display:block;width:max-content;max-width:100%;margin:15px auto 0;font-size:10px;padding:5px 9px}
+.request-action{margin-top:8px}
+@media(max-width:420px){.friends-table th{font-size:9px}.friends-table td{padding:8px 3px}.friend-action{font-size:8px;padding:5px 6px}.friend-name{font-size:11px}.friend-code{font-size:8px}.compare-scores{gap:18px}}
 </style>
 <script src="core.js"></script><script type="module" src="friend.js"></script></body></html>
