@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FitSync Firebase Test</title>
+</head>
+<body>
+<h2>FitSync Firebase Test</h2>
+<div id="status">Connecting...</div>
+
+<script type="module">
+import { auth } from "./firebase.js";
+import { signInAnonymously } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+signInAnonymously(auth)
+.then(user=>{
+ document.getElementById("status").textContent=
+ "Firebase connected successfully. User ID: "+user.user.uid;
+})
+.catch(error=>{
+ document.getElementById("status").textContent=
+ "Firebase error: "+error.message;
+ console.error(error);
+});
+</script>
+</body>
+</html>
