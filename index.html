@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#06110c"><title>FitSync — Home</title><link rel="stylesheet" href="styles.css"></head>
+<body><div class="app"><main>
+<section class="page-head"><h1 class="page-title" id="greeting">Good evening!</h1><div class="page-subtitle">Keep your health goals moving forward.</div></section>
+<section class="card score-card"><div class="score-row"><div><div class="score-kicker">TODAY'S HEALTH SCORE</div><div class="score-text" id="scoreText">Let's make today count.</div></div><div class="score-ring" id="scoreRing"><span><b id="score">0</b><small>/100</small></span></div></div></section>
+<section class="section stat-grid">
+<div class="stat"><div class="stat-icon">◉</div><div class="stat-value"><span id="cal">0</span></div><div class="stat-label">Calories eaten</div></div>
+<div class="stat"><div class="stat-icon">◆</div><div class="stat-value"><span id="protein">0.0</span> g</div><div class="stat-label">Protein</div></div>
+<div class="stat"><div class="stat-icon">⌁</div><div class="stat-value"><span id="steps">0</span></div><div class="stat-label">Steps</div></div>
+<div class="stat"><div class="stat-icon">◒</div><div class="stat-value"><span id="sleep">0</span> h</div><div class="stat-label">Sleep</div></div>
+</section>
+<section class="card section"><h2 class="card-title">Today's progress</h2>
+<div class="progress-row"><div class="progress-top"><span>Calories</span><b id="calTargetText">0 / 1950 kcal</b></div><div class="bar"><i id="calBar"></i></div></div>
+<div class="progress-row"><div class="progress-top"><span>Protein</span><b id="proteinTargetText">0 / 120 g</b></div><div class="bar"><i id="proteinBar"></i></div></div>
+<div class="progress-row"><div class="progress-top"><span>Steps</span><b id="stepsTargetText">0 / 8000</b></div><div class="bar"><i id="stepsBar"></i></div></div>
+</section>
+<section class="card advisor section"><div class="advisor-head"><div class="advisor-icon">✦</div><div><h2 class="card-title" style="margin:0">Smart Daily Advisor</h2><div class="muted">A quick suggestion based on today's data.</div></div></div><div class="advisor-text" id="advisor">Add a short walk to boost your daily steps.</div></section>
+</main></div><script src="core.js"></script><script src="home.js"></script></body></html>
